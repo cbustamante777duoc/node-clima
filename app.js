@@ -17,7 +17,24 @@ console.log(argv.direccion);
 /*lugar.getLugar(argv.direccion)
     .then(console.log);
 */
-clima.getClima(13.730000,100.500000)
+
+/*clima.getClima(13.730000,100.500000)
     .then(console.log)
     .catch(console.log);
+*/
 
+const getInfo = async (direccion) => {
+
+    try {
+        const cords = await lugar.getLugar(direccion);
+        const temp = await clima.getClima(cords.latitud, cords.log);
+        return `el clima de ${ cords.direccion} es de ${temp}`
+        
+    } catch (error) {
+        return `no se puede determinar el clima de ${direccion}`;
+    }
+}
+
+getInfo(argv.direccion)
+    .then(console.log)
+    .catch(console.log)
